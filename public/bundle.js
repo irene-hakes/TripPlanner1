@@ -104,7 +104,18 @@ eval("/* Mapbox GL JS is licensed under the 3-Clause BSD License. Full text of l
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// console.log('If you can read this, I am running correctly!');\nconst mapboxgl = __webpack_require__(/*! mapbox-gl */ \"./node_modules/mapbox-gl/dist/mapbox-gl.js\");\n\nmapboxgl.accessToken = 'pk.eyJ1IjoiaXJlbmVoYWtlcyIsImEiOiJjamtrNGN1eTYwOHAyM3BwYm55YWs5ZzZhIn0.lp0z6cXRyyDXwu0KBd9z8w';\n\nconst map = new mapboxgl.Map({\n  container: \"map\",\n  center: [-74.009, 40.705], //FullStack NY coordinates\n  zoom: 12, //starting zoom\n  style: \"mapbox://styles/irenehakes/cjkk4zd8o54qh2rplqvkgh64t\" //mapbox has lots of different map styles available\n})\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("// console.log('If you can read this, I am running correctly!');\nconst mapboxgl = __webpack_require__(/*! mapbox-gl */ \"./node_modules/mapbox-gl/dist/mapbox-gl.js\");\nconst buildMarker = __webpack_require__(/*! ./marker */ \"./src/marker.js\");\n\nmapboxgl.accessToken = 'pk.eyJ1IjoiaXJlbmVoYWtlcyIsImEiOiJjamtrNGN1eTYwOHAyM3BwYm55YWs5ZzZhIn0.lp0z6cXRyyDXwu0KBd9z8w';\n\nconst map = new mapboxgl.Map({\n  container: \"map\",\n  center: [-74.009, 40.705], //FullStack NY coordinates\n  zoom: 12, //starting zoom\n  style: \"mapbox://styles/irenehakes/cjkk4zd8o54qh2rplqvkgh64t\" //mapbox has lots of different map styles available\n})\n\nconst marker1 = buildMarker('activities', [-74.009, 40.705]);\nconst marker2 = buildMarker('hotels', [-75, 40.705]);\nconst marker3 = buildMarker('restaurants', [-73, 40.705]);\nmarker1.addTo(map)\nmarker2.addTo(map)\nmarker3.addTo(map)\n\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/marker.js":
+/*!***********************!*\
+  !*** ./src/marker.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nconst mapboxgl = __webpack_require__(/*! mapbox-gl */ \"./node_modules/mapbox-gl/dist/mapbox-gl.js\");\n\nconst iconURLs = {\n  hotels: \"http://i.imgur.com/D9574Cu.png\",\n  restaurants: \"http://i.imgur.com/cqR6pUI.png\",\n  activities: \"http://i.imgur.com/WbMOfMl.png\"\n}\n\nconst createMarker = (type, coords) => {\n  const markerDomEl = document.createElement(\"div\");\n  markerDomEl.style.width = \"32px\";\n  markerDomEl.style.height = \"39px\";\n  markerDomEl.style.backgroundImage = `url(${iconURLs[type]})`\n  const newMarker = new mapboxgl.Marker(markerDomEl)\n    .setLngLat(coords)\n  return newMarker\n}\n\nmodule.exports = createMarker\n\n\n//# sourceURL=webpack:///./src/marker.js?");
 
 /***/ })
 
